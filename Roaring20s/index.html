@@ -1,0 +1,288 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+
+  <title>AER Game Controller</title>
+  <meta name="description" content="The HTML5 Herald">
+  <meta name="author" content="SitePoint">
+
+  <link rel="stylesheet" href="style.css">
+  <link rel="shortcut icon" href="AERfavicon.ico">
+  <link rel="icon" type="image/gif" href="Assets/AERfavicon.ico">
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.10.2/p5.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.10.2/addons/p5.sound.min.js"></script>
+
+  <script src="https://kit.fontawesome.com/b09f28c6d0.js" ></script>
+  <link rel="stylesheet" type="text/css" href="">
+</head>
+
+
+
+<body onload="">
+  <!----------------------------------
+  _    _                _           
+ | |  | |              | |          
+ | |__| | ___  __ _  __| | ___ _ __ 
+ |  __  |/ _ \/ _` |/ _` |/ _ \ '__|
+ | |  | |  __/ (_| | (_| |  __/ |   
+ |_|  |_|\___|\__,_|\__,_|\___|_|   
+                                    
+ ----------------------------------->
+  <header>
+    <a href="index.html"><img src="../Assets/Pictures/AER_Logo.png"></a>
+    <span id="header">AER Game Master</span>
+  </header>
+
+  <section class="top"></section>
+  <!------------------------------------
+   _____                _               
+  |  __ \              (_)              
+  | |__) | __ _____   ___  _____      __
+  |  ___/ '__/ _ \ \ / / |/ _ \ \ /\ / /
+  | |   | | |  __/\ V /| |  __/\ V  V / 
+  |_|   |_|  \___| \_/ |_|\___| \_/\_/  
+                                        
+ --------------------------------------->
+  <div class="preview">
+    <div class="liveWindowOverlay" id="liveWindowOverlay">
+      <button class="liveWindowBtn" id="liveWindowBtn" type="button" onclick="openLiveWindow()">Open Live Window
+      </button>
+    </div>
+    <!--Picture Overlay-->
+    <div class="previewPicOverlay" id="previewPicOverlay">
+      <i class="picClose fas fa-times" id="picClose" onclick="picClose()"></i>
+    </div>
+    <!--Video Overlay-->
+    <div class="previewVideoOverlay" id="previewVideoOverlay">
+      <i class="videoClose fas fa-times" id="videoClose" onclick="videoClose()"></i>
+      <video id="VideoOfficeIntro" controls muted onclick="playVid(id)">
+        <source src="Assets/Videos/Intro.mp4" type="video/mp4">
+      </video>
+      <video id="VideoDirectionalLock" controls muted onclick="playVid(id)">
+        <source src="Assets/Videos/Directional Lock.m4v" type="video/mp4">
+      </video>
+    </div>
+    <!--Default View-->
+    <img src="Assets/Pictures/background.jpg" alt="background">
+    <div class="time" id="previewTime">60:00</div>
+    <div class="hint" id="previewHint">Good Luck Team! Hints available at 40 mins or less.</div>
+    <div class="GMtyping" id="GMtyping">
+      <div class="dotContainer">
+        <span>Game Master is Typing</span>
+        <span class="dotOne">.</span>
+        <span class="dotTwo">.</span>
+        <span class="dotThree">.</span>
+      </div>
+    </div>
+  </div>
+
+  <!------------------------------------
+   _____ _     _      _                
+  / ____(_)   | |    | |               
+ | (___  _  __| | ___| |__   __ _ _ __ 
+  \___ \| |/ _` |/ _ \ '_ \ / _` | '__|
+  ____) | | (_| |  __/ |_) | (_| | |   
+ |_____/|_|\__,_|\___|_.__/ \__,_|_|   
+                                       
+ --------------------------------------->
+  <div class="sidebar">
+    <!------------------------->
+    <!-----Time Container------>
+    <div class="timeContainer">
+      <!--Play Pause on Hover Overlay-->
+      <div class="overlay">
+        <button class="play" id="play" onclick="pause(false)"><i class="fas fa-play"></i></button>
+        <button class="pause" id="pause" onclick="pause(true)"><i class="fas fa-pause"></i></button>
+      </div>
+      <!--Time Remaining Counter-->
+      <div class="time" id="time">60:00</div>
+      <!--Play/Pause Status and Projected Game End Time-->
+      <div class="underTime">
+        <div class="playPause">
+          <button class="underPlay" id="underPlay" onclick="pause(true)"><i class="fas fa-play"></i></button>
+          <button class="underPause" id="underPause" onclick="pause(false)"><i class="fas fa-pause"></i></button>
+        </div>
+        <div class="endTime" id="endTime">8:37pm</div>
+      </div>
+      <!--Time Adjustments-->
+      <div class="timeAdjust">
+        <button class="minus" type="button" onclick="subTime()"><i class="fas fa-minus"></i></button>
+        <input class="amount" id="amount" type="number" min="0" max="60">
+        <button class="plus" type="button" onclick="addTime()"><i class="fas fa-plus"></i></button>
+      </div>
+    </div>
+    <!--Hint Tracker-->
+    <div class="hintTrackerContainer">
+      <div class="hintsUsed">Hints Used:&nbsp;<span id="numOfHints">0</span></div>
+      <div class="hintAdjustContainer">
+        <button class="hintSub" onclick="hintSub()"><i class="fas fa-lock"></i></button>
+        <button class="hintAdd" onclick="hintAdd()"><i class="fas fa-unlock"></i></button>
+      </div>
+
+      <!------------------------->
+      <!---------Controls-------->
+      <div class="controls" id="controls">
+        <button class="contextBtn" id="contextBtn" value="1" onclick="openLiveWindow()" type="button">Live
+          Window</button>
+      </div>
+    </div>
+  </div>
+  </section>
+
+
+  <section class="bottom">
+
+    <!------------------------
+  _    _ _       _       
+ | |  | (_)     | |      
+ | |__| |_ _ __ | |_ ___ 
+ |  __  | | '_ \| __/ __|
+ | |  | | | | | | |_\__ \
+ |_|  |_|_|_| |_|\__|___/
+
+ ------------------------->
+
+    <!---------Tabs-------->
+    <div class="hints">
+      <div class="tab">
+        <button class="tablinks writtenTab active" onclick="openTab(event, 'Written')"><i
+            class="fas fa-pen"></i></button>
+        <button class="tablinks picturesTab" onclick="openTab(event, 'Pictures')"><i class="fas fa-image"></i></button>
+        <button class="tablinks videosTab" onclick="openTab(event, 'Videos')"><i class="fas fa-film"></i></button>
+        <button class="tablinks audioTab" onclick="openTab(event, 'Audio')"><i class="fas fa-volume-up"></i></button>
+        <button class="tablinks hintTab" onclick="openTab(event, 'Hints')"><i class="fas fa-stream"></i></button>
+      </div>
+
+      <!--Prewritten-->
+      <div id="Written" class="tabcontent">
+        <h1>Prewritten Hints<i class="editToggleBtn fas fa-pencil-alt" onclick="toggleHintEdit()"></i></h1>
+        <ol id="prewrittenList">
+        </ol>
+      </div>
+
+      <!--Pictures-->
+      <div id="Pictures" class="tabcontent">
+        <h1>Pictures<i class="editToggleBtn fas fa-pencil-alt" onclick="toggleAddPicture()"></i></h1>
+        <!--Add Picture-->
+        <div class="addMediaOuter" id="addImageOuter">
+          <div class="addMedia" id="pictureDropArea">
+            <div id="newPicturePreview"><i class="fas fa-plus"></i></div>
+          </div>
+          <div class="addMediaInputContainer">
+            <h3>Add New Picture <button onclick="saveNewPicture()">Save Picture</button></h3>
+            <span>File Name</span><br>
+            <input id="pictureFileName" type="text" value=""><br>
+            <span>Image Address</span><br>
+            <input id="pictureURL" type="text" value="">
+          </div>
+        </div>
+
+        <div class="pictureSelectionList" id="pictureSelectionList"></div>
+      </div>
+
+      <!--Videos-->
+      <div id="Videos" class="tabcontent">
+        <h1>Videos<i class="editToggleBtn fas fa-pencil-alt" onclick="toggleAddVideo()"></i></h1>
+        <!--Add Videos-->
+        <div class="addMediaOuter" id="addVideoOuter">
+          <div class="addMedia" id="videoDropArea">
+            <div id="newVideoPreview"><i class="fas fa-plus"></i></div>
+          </div>
+          <div class="addMediaInputContainer">
+            <h3>Add New Video <button onclick="saveNewVideo()">Save Picture</button></h3>
+            <span>File Name</span><br>
+            <input id="VideoFileName" type="text" value=""><br>
+            <span>Video Address</span><br>
+            <input id="VideoURL" type="text" value="">
+          </div>
+        </div>
+        <ol id="videoContainer">
+        </ol>
+      </div>
+
+      <!--Audio-->
+      <div id="Audio" class="tabcontent">
+        <h1>Audio<i class="editToggleBtn fas fa-pencil-alt" onclick="toggleAddAudio()"></i></h1>
+        <!--Add Videos-->
+        <div class="addMediaOuter" id="addAudioOuter">
+          <div class="addMedia" id="audioDropArea">
+            <div id="newAudioPreview"><i class="fas fa-plus"></i></div>
+          </div>
+          <div class="addMediaInputContainer">
+            <h3>Add New Audio <button onclick="saveNewAudio()">Save Picture</button></h3>
+            <span>File Name</span><br>
+            <input id="AudioFileName" type="text" value=""><br>
+            <span>Audio Address</span><br>
+            <input id="AudioURL" type="text" value="">
+          </div>
+        </div>
+        <ol id='audioContainer'>
+        </ol>
+      </div>
+
+      <!--Hint Log-->
+      <div id="Hints" class="tabcontent">
+        <h1>Hint Log</h1>
+        <ul class="hintLog" id="hintLog">
+        </ul>
+      </div>
+
+
+      <!----------------------------------------
+  _    _ _       _     ______    _ _ _   
+ | |  | (_)     | |   |  ____|  | (_) |  
+ | |__| |_ _ __ | |_  | |__   __| |_| |_ 
+ |  __  | | '_ \| __| |  __| / _` | | __|
+ | |  | | | | | | |_  | |___| (_| | | |_ 
+ |_|  |_|_|_| |_|\__| |______\__,_|_|\__|
+                                         
+ ----------------------------------------->
+      <div class="hintEdit">
+        <textarea id="textarea" placeholder="Type Here..."></textarea>
+        <i class="addHint fas fa-plus" id="addHint" onclick="addHint()"></i>
+        <div>
+          <button type="button" class="ding" onclick="audioSelected('ding.wav')"><i class="fas fa-bell"></i></button>
+          <button type="button" class="clear" onclick="clearHint()"><i class="fas fa-times"></i></button>
+          <button type="button" class="send" onclick="sendHint()"><i class="fas fa-level-up-alt"></i></button>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+
+<!------------------------------------------------------------------------------------------
+  _                    _           _                         _   ______                   
+ | |                  | |         | |                       | | |  ____|                  
+ | |     ___  __ _  __| | ___ _ __| |__   ___   __ _ _ __ __| | | |__ ___  _ __ _ __ ___  
+ | |    / _ \/ _` |/ _` |/ _ \ '__| '_ \ / _ \ / _` | '__/ _` | |  __/ _ \| '__| '_ ` _ \ 
+ | |___|  __/ (_| | (_| |  __/ |  | |_) | (_) | (_| | | | (_| | | | | (_) | |  | | | | | |
+ |______\___|\__,_|\__,_|\___|_|  |_.__/ \___/ \__,_|_|  \__,_| |_|  \___/|_|  |_| |_| |_|
+                                                                                          
+ -------------------------------------------------------------------------------------------->
+  <div class="leaderboardFormContainer" id="leaderboardFormContainer">
+    <div class="leaderboardFormInner">
+      <form class="leaderboardForm" id="leaderboardForm">
+        <i class="formClose fas fa-times" id="formClose" onclick="closeLeaderboardForm()"></i>
+        <h1>Leaderboard Form</h1><br>
+        <h3>Time Remaining:</h3>
+        <input type="text" name="Time" id="leaderboardTime">
+        <h3>Team Name:</h3>
+        <input type="text" name="Team Name" id="leaderboardTeam">
+        <div class="formConfirm" onclick="sendLeaderboardInfo()">Confirm</div>
+        <div class="formContinue" onclick="formContinue()">Continue Game</div> 
+      </form>
+    </div>>
+  </div>
+
+  <script src="../node_modules/sortablejs/Sortable.js"></script>
+  <script src="scripts.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,23 @@
+{
+  "roomTitle": "The Roaring 20's",
+  "roomFolder": "Roaring20s",
+  "prewritten": [
+    "Please standby. Someone is on their way.",
+    "Please no picture or video in the room. This is grounds to end the game.",
+    "Remember hints are available after 20mins have passed.",
+    "There are 2 small knobs on the desk. Pull out both wooden slabs to reveal the next step.",
+    "You're not even trying, dawg",
+    "Look here",
+    "Look there",
+    "Look under your butt",
+    "Look everywhere"
+  ],
+  "pictures": [
+    "https://www.w3schools.com/w3images/nature.jpg",
+    "https://www.w3schools.com/howto/img_woods.jpg",
+    "http://bengomez.me/AERWebsite/Assets/AER_Logo.png",
+    "http://bengomez.me/AERWebsite/Assets/AER_Logo.png",
+    "http://bengomez.me/AERWebsite/Assets/AER_Logo.png",
+    "http://bengomez.me/AERWebsite/Assets/AER_Logo.png"
+  ]
+}

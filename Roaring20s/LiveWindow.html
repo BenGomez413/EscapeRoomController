@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Roaring 20's Live Window</title>
+  <meta name="description" content="The HTML5 Herald">
+  <meta name="author" content="SitePoint">
+  <link rel="stylesheet" href="style.css">
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.10.2/p5.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.10.2/addons/p5.sound.min.js"></script>
+
+  <script src="https://kit.fontawesome.com/b09f28c6d0.js" crossorigin="anonymous"></script>
+</head>
+<body ondblclick="makeFullscreen()">
+  <section class="liveView 20s">
+    <div class="livePicOverlay" id="livePicOverlay"></div>
+    <div class="liveVideoOverlay" id="liveVideoOverlay">
+      
+    </div>
+    <img src="Assets/Pictures/background.jpg" alt="20sBackground">
+    <div class="time" id="liveTime">60:00</div>
+    <div class="hint" id="liveHint">If you are Reading this Something is Wrong</div>
+    <div class="liveGMtyping" id="liveGMtyping">
+      <div class="dotContainer">
+        <span>Game Master is Typing</span>
+        <span class="dotOne">.</span>
+        <span class="dotTwo">.</span>
+        <span class="dotThree">.</span>
+      </div>
+    </div>
+  </section>
+  <!--<script src="scripts.js"></script>-->
+  <script src="liveWindow.js"></script>
+</body>
+</html>
